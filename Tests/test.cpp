@@ -3,6 +3,8 @@
 #include "Ship.h"
 #include "GameField.h"
 #include "Player.h"
+#include "Game.h"
+
 TEST(PositionTest, Constructor)
 {
 	Position p1(2, 5);
@@ -81,4 +83,24 @@ TEST(PlayerTest, InitializationAndDefeat) {
 
 	player.getField().shoot(Position(0, 0));
 	EXPECT_TRUE(player.isDefeated());
+}
+
+TEST(GameTest, TurnSwitchAndVictory) {
+	Game game("Player 1", "Player 2");
+
+	game.getPlayer2().getField().placeShip(Ship(Position(0, 0), 1, Orientation::Horizontal));
+
+	game.start();
+	EXPECT_EQ(game.getState(), GameState::Player1Turn);
+
+	game.makeMove(Position(5, 5));
+	EXPECT_EQ(game.getState(), GameState::Player2Turn);
+
+	game.makeMove(Position(5, 5));
+	EXPECT_EQ(game.getState(), GameState::Player1Turn);
+
+	game.makeMove(Position(0, 0));
+	EXPECT_EQ(game.getState(), GameState::Finished);
+	ASSERT_NE(game.getWinner(), nullptr);
+	EXPECT_EQ(game.getWinner()->getName(), "Player 1");
 }
