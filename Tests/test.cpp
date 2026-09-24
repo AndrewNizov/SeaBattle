@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Position.h"
 #include "Ship.h"
+#include "GameField.h"
 
 TEST(PositionTest, Constructor)
 {
@@ -40,4 +41,31 @@ TEST(ShipTest,Sinking)
 	ship.takeHits();
 	EXPECT_TRUE(ship.isSunk());
 
+}
+
+TEST(GameFieldTest, PlaceShipShoot)
+{
+	GameField field;
+	Ship ship(Position(0, 0), 2, Orientation::Horizontal);
+
+	EXPECT_TRUE(field.placeShip(ship));
+	EXPECT_EQ(field.getShipsCount(), 1);
+
+	EXPECT_EQ(field.shoot(Position(5, 5)), CellState::Miss);
+	EXPECT_EQ(field.shoot(Position(0, 0)), CellState::Hit);
+	EXPECT_FALSE(field.allShipsSunk());
+	EXPECT_EQ(field.shoot(Position(1, 0)), CellState::Hit);
+	EXPECT_TRUE(field.allShipsSunk());
+}
+
+TEST(GameFieldTest, MoreShips)
+{
+	GameField field;
+	Ship ship1(Position(2, 2), 2, Orientation::Horizontal);
+	Ship ship2(Position(2, 2), 2, Orientation::Vertical);
+	Ship ship3(Position(3, 3), 1, Orientation::Horizontal);
+
+	EXPECT_TRUE(field.placeShip(ship1));
+	EXPECT_FALSE(field.placeShip(ship2));
+	EXPECT_FALSE(field.placeShip(ship3));
 }

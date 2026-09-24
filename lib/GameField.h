@@ -25,7 +25,7 @@ public:
 
 	bool placeShip(const Ship& ship);
 	CellState shoot(Position pos);
-	CellState getCell(int x, int y);
+	CellState getCell(int x, int y) const;
 	bool allShipsSunk() const;
 	int getShipsCount() const;
 };
