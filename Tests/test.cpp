@@ -2,7 +2,7 @@
 #include "Position.h"
 #include "Ship.h"
 #include "GameField.h"
-
+#include "Player.h"
 TEST(PositionTest, Constructor)
 {
 	Position p1(2, 5);
@@ -68,4 +68,17 @@ TEST(GameFieldTest, MoreShips)
 	EXPECT_TRUE(field.placeShip(ship1));
 	EXPECT_FALSE(field.placeShip(ship2));
 	EXPECT_FALSE(field.placeShip(ship3));
+}
+
+TEST(PlayerTest, InitializationAndDefeat) {
+	Player player("Alice");
+	EXPECT_EQ(player.getName(), "Alice");
+	EXPECT_FALSE(player.isDefeated());
+
+	Ship ship(Position(0, 0), 1, Orientation::Horizontal);
+	player.getField().placeShip(ship);
+	EXPECT_FALSE(player.isDefeated());
+
+	player.getField().shoot(Position(0, 0));
+	EXPECT_TRUE(player.isDefeated());
 }
