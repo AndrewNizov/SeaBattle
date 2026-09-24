@@ -17,7 +17,7 @@ class GameField
 	CellState grid[SIZE][SIZE];
 	std::vector<Ship> ships;
 
-	bool isValidPosition(int x, int y);
+	bool isValidPosition(int x, int y) const;
 	bool canPlaceShip(const Ship& ship) const;
 
 public:
