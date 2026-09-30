@@ -19,7 +19,9 @@ bool GameField::canPlaceShip(const Ship& ship) const {
         if (!isValidPosition(pos.x, pos.y)) {
             return false;
         }
-
+    }
+    for (const auto& pos : positions)
+    {
         for (int dy = -1; dy <= 1; ++dy) {
             for (int dx = -1; dx <= 1; ++dx) {
                 int nx = pos.x + dx;
