@@ -64,8 +64,8 @@ CellState GameField::shoot(Position pos) {
         }
         return CellState::Hit;
     }
-    else if (grid[pos.y][pos.x] == CellState::Hit) {
-        return CellState::Hit;
+    else if (grid[pos.y][pos.x] == CellState::Hit || grid[pos.y][pos.x] == CellState::Miss) {
+        return grid[pos.y][pos.x];
     }
     else {
         grid[pos.y][pos.x] = CellState::Miss;

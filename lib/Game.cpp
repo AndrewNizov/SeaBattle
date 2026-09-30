@@ -15,7 +15,6 @@ void Game::start()
 
 
 }
-
 bool Game::makeMove(Position target)
 {
     if (state != GameState::Player1Turn && state != GameState::Player2Turn)
@@ -24,6 +23,13 @@ bool Game::makeMove(Position target)
     }
 
     Player& defender = (state == GameState::Player1Turn) ? player2 : player1;
+
+    CellState prev = defender.getField().getCell(target.x, target.y);
+    if (prev == CellState::Hit || prev == CellState::Miss)
+    {
+        return false; 
+    }
+
     CellState result = defender.getField().shoot(target);
 
     if (defender.isDefeated())
@@ -40,7 +46,7 @@ bool Game::makeMove(Position target)
     return true;
 }
 
-Player* Game::getWinner() const
+const Player* Game::getWinner() const
 {
     if (state != GameState::Finished) return nullptr;
     if (player2.isDefeated()) return const_cast<Player*>(&player1);
