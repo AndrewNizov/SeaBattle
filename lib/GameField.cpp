@@ -16,7 +16,7 @@ bool GameField::canPlaceShip(const Ship& ship) const {
     auto positions = ship.getOccupiedPositions();
 
     for (const auto& pos : positions) {
-        if (!isValidPosition(pos.x, pos.y)) {
+        if (!isValidPosition(pos.getX(), pos.getY())) {
             return false;
         }
     }
@@ -24,8 +24,8 @@ bool GameField::canPlaceShip(const Ship& ship) const {
     {
         for (int dy = -1; dy <= 1; ++dy) {
             for (int dx = -1; dx <= 1; ++dx) {
-                int nx = pos.x + dx;
-                int ny = pos.y + dy;
+                int nx = pos.getX() + dx;
+                int ny = pos.getY() + dy;
 
                 if (isValidPosition(nx, ny)) {
                     if (grid[ny][nx] == CellState::Ship) {
@@ -44,16 +44,16 @@ bool GameField::placeShip(const Ship& ship) {
     ships.push_back(ship);
     auto positions = ship.getOccupiedPositions();
     for (const auto& pos : positions) {
-        grid[pos.y][pos.x] = CellState::Ship;
+        grid[pos.getY()][pos.getX()] = CellState::Ship;
     }
     return true;
 }
 
 CellState GameField::shoot(Position pos) {
-    if (!isValidPosition(pos.x, pos.y)) return CellState::Empty;
+    if (!isValidPosition(pos.getX(), pos.getY())) return CellState::Empty;
 
-    if (grid[pos.y][pos.x] == CellState::Ship) {
-        grid[pos.y][pos.x] = CellState::Hit;
+    if (grid[pos.getY()][pos.getX()] == CellState::Ship) {
+        grid[pos.getY()][pos.getX()] = CellState::Hit;
 
         for (auto& ship : ships) {
             auto positions = ship.getOccupiedPositions();
@@ -66,11 +66,11 @@ CellState GameField::shoot(Position pos) {
         }
         return CellState::Hit;
     }
-    else if (grid[pos.y][pos.x] == CellState::Hit || grid[pos.y][pos.x] == CellState::Miss) {
-        return grid[pos.y][pos.x];
+    else if (grid[pos.getY()][pos.getX()] == CellState::Hit || grid[pos.getY()][pos.getX()] == CellState::Miss) {
+        return grid[pos.getY()][pos.getX()];
     }
     else {
-        grid[pos.y][pos.x] = CellState::Miss;
+        grid[pos.getY()][pos.getX()] = CellState::Miss;
         return CellState::Miss;
     }
 }

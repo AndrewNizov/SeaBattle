@@ -38,9 +38,9 @@ std::vector<Position> Ship::getOccupiedPositions() const
 	for (int i = 0; i < size; ++i)
 	{
 		if (orientation == Orientation::Horizontal)
-			positions.push_back(Position(startPosition.x + i, startPosition.y));
+			positions.push_back(Position(startPosition.getX() + i, startPosition.getY()));
 		else
-			positions.push_back(Position(startPosition.x, startPosition.y + i));
+			positions.push_back(Position(startPosition.getX(), startPosition.getY() + i));
 	}
 	return positions;
 }

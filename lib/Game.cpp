@@ -24,7 +24,7 @@ bool Game::makeMove(Position target)
 
     Player& defender = (state == GameState::Player1Turn) ? player2 : player1;
 
-    CellState prev = defender.getField().getCell(target.x, target.y);
+    CellState prev = defender.getField().getCell(target.getX(), target.getY());
     if (prev == CellState::Hit || prev == CellState::Miss)
     {
         return false; 
