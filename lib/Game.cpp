@@ -7,9 +7,13 @@ Player& Game::getPlayer1() { return player1; }
 Player& Game::getPlayer2() { return player2; }
 GameState Game::getState() const { return state; }
 
+
 void Game::start() 
 {
-    state = GameState::Player1Turn;
+    
+        state = GameState::Player1Turn;
+
+
 }
 
 bool Game::makeMove(Position target)

@@ -103,4 +103,26 @@ TEST(GameTest, TurnSwitchAndVictory) {
 	EXPECT_EQ(game.getState(), GameState::Finished);
 	ASSERT_NE(game.getWinner(), nullptr);
 	EXPECT_EQ(game.getWinner()->getName(), "Player 1");
+
+}
+
+TEST(GameTest, StartOrNot) {
+	Game game("Player 1", "Player 2");
+
+	game.getPlayer2().getField().placeShip(Ship(Position(0, 0), 1, Orientation::Horizontal));
+
+	game.start();
+	EXPECT_EQ(game.getState(), GameState::Player1Turn);
+
+	game.makeMove(Position(5, 5));
+	EXPECT_EQ(game.getState(), GameState::Player2Turn);
+
+	game.makeMove(Position(5, 5));
+	EXPECT_EQ(game.getState(), GameState::Player1Turn);
+
+	game.makeMove(Position(0, 0));
+	EXPECT_EQ(game.getState(), GameState::Finished);
+	ASSERT_NE(game.getWinner(), nullptr);
+	EXPECT_EQ(game.getWinner()->getName(), "Player 1");
+
 }

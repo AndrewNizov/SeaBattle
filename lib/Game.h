@@ -22,7 +22,8 @@ public:
     Player& getPlayer2();
     GameState getState() const;
 
+
     void start();
     bool makeMove(Position target);
-    Player* getWinner() const;
+    const Player* getWinner() const;
 };
